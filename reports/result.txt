@@ -1,0 +1,10 @@
+Requests per second:
+
+gunicorn :  584.74
+nginx_static :  12955.89 
+gunicorn+nginx+cache : 12794.10
+
+параметры тестированиия: ab -c 10 -n 1000 http:// ... / > ... .txt
+
+Выводы: 1) nginx прибличительно в 22 раз быстее отдаёт статику
+	2) прибличительно в 22 раз ускоряет работу proxy_cache

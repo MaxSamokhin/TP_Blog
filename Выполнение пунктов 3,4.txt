@@ -1,0 +1,3 @@
+3) gunicorn -c my.conf hello:application
+ gunicorn -c my.conf hello:hello
+4) gunicorn -c django.conf ask_max.wsgi:application
