@@ -23,8 +23,10 @@ def getpost(request):
     if request.method == 'GET':
         if request.GET:
             result.append('<h1>Get data:</h1>')
-            for key, value in request.GET.items():
-                keyvalue=key+" = "+value
-                result.append(keyvalue)
+            for key,value in request.GET.items():
+                list = request.GET.getlist(key)
+                for elem in list:
+                    keyvalue = key + " = " + elem
+                    result.append(keyvalue)
 
     return HttpResponse('<br>'.join(result))
