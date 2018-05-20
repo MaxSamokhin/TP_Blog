@@ -1,0 +1,184 @@
+{% extends 'base.html' %}
+{% load staticfiles %}
+
+{% block title %}<title>AskMax_question</title>{% endblock %}
+
+{% block content %}
+    <style type="text/css">
+ /*Кнопки лайков */
+.likebutton{
+	cursor: pointer;
+}
+.anslikebutton{
+	cursor: pointer;
+}
+.likebtn{
+	vertical-align: bottom;
+	content: url( {% static 'img/like.png' %});
+}
+.islikebtn{
+	vertical-align: bottom;
+    content: url( {% static 'img/is_liked.png' %});
+}
+.dislikebtn{
+	vertical-align: bottom;
+    content: url( {% static 'img/dislike.png' %});
+
+}
+.isdislikebtn{
+	vertical-align: bottom;
+    content: url("../static/img/is_disliked.png");
+}
+.page-question-like{
+	width: 120px;
+	margin-top: 110px;
+	margin-left: -110px;
+	float: left;
+	text-align: center;
+}
+.question-like{
+	width: 110px;
+	margin-left: -10px;
+    margin-top: 0px;
+	text-align: center;
+}
+.page-like-img{
+	width: 20px;
+	height: 20px;
+}
+  </style>
+    <br>
+    {% block question %}
+        <span id="error{{ question.id }}" class="bg-danger" style="margin-left: 75%;"></span>
+        <div class="row" id="main_question">
+            <div class="row">
+                <div class="col-xs-3 col-sm-3">
+                    <div class="col-xs-12 col-sm-12">
+                        <img src="{{ question.author.profile.avatar.url }}" width="100%" height="100%">
+                    </div>
+
+{#                    <div class="col-xs-12 col-sm-12 button_count">#}
+{#                            <span class="label label-primary">#}
+{#                                {% if request.user.is_authenticated %}#}
+{#                                    <a class="likebutton" value="1" qid="{{ question.id }} " id="btnlike{{ question.id }}">#}
+{#                                            <span class="glyphicon glyphicon-menu-up "  style="color: white;" ></span>#}
+{#                                    </a>#}
+{#                                {% endif %}#}
+{#                                   <span id="qRating{{ question.id }}">{{ question.likes }}</span>#}
+{#                                {% if request.user.is_authenticated %}#}
+{#                                <a class="likebutton" value="-1" qid="{{ question.id }}" id="btndislike{{ question.id }}">#}
+{#                                        <span class="glyphicon glyphicon-menu-down" style="color: white;"></span></a>#}
+{#                                {% endif %}#}
+{#                            </span>#}
+{##}
+{#                    </div>#}
+                <div class="col-xs-12 col-sm-12 button_count" style="margin-left: 5px;">
+                <div class="question-like label label-default">
+                  <a class="likebutton" value="-1" qid="{{ question.id }}" id="btndislike{{ question.id }}"><span class="page-like-img {% if islike == -1 %}is{% endif %}dislikebtn"/></a>
+                  <span id="qRating{{ question.id }}" class="label label-default">{{ question.likes }}</span>
+                  <a class="likebutton" value="1" qid="{{ question.id }}" id="btnlike{{ question.id }}"><span class="page-like-img {% if islike == 1 %}is{% endif %}likebtn"></a>
+               </div>
+                </div>
+                </div>
+                <div class="col-xs-9 col-sm-9">
+                    <div class="row">
+                        <a href="{% url 'question' question.id %}"><h3
+                                style="size: 22px; margin-top: 0px; margin-bottom: 5px"> {{ question.title }} </h3>
+                        </a>
+                        <p style=" font-size:16px; margin: 15px 20px 15px 0">
+                            {{ question.text }}
+                        </p>
+                        <div>
+                            <span class="glyphicon glyphicon-tags"></span> Tags :
+                            {% for tag in question.tags.all %}
+                                <a href="{% url 'tag' tag.title %}"><span
+                                        class="label label-info btn-inverse">{{ tag.title }}</span></a>
+                            {% endfor %}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    {% endblock %}
+    <br>
+    <hr>
+    {% for answer in answers %}
+        <span id="error{{ answer.id }}ans" class="bg-danger" style="margin-left: 75%;"></span>
+        <a name="comment{{ answer.id }}"></a>
+        <div class="jumbotron " style="padding: 20px 20px;">
+            <div class="row">
+                <div class="col-xs-2 col-sm-2">
+                    <div class="col-xs-12 col-sm-12">
+                        <img src="{{ question.author.profile.avatar.url }}" width="100%" height="100%">
+                    </div>
+                    <div class="col-xs-12 col-sm-12 button_count">
+
+{#                            <a class="anslikebutton" value="1" aid="{{ answer.id }}">#}
+{#                                <span class="glyphicon glyphicon-menu-up" style="color: white;"></span>#}
+{#                            </a>#}
+{#                            <span id="aRating{{ answer.id }}">{{ answer.likes }}</span>#}
+{#                            <a class="anslikebutton" value="-1" aid="{{ answer.id }}">#}
+{#                                <span class="glyphicon glyphicon-menu-down" style="color: white;"></span>#}
+{#                            </a>#}
+{# </span>#}
+                        <div class="col-xs-12 col-sm-12 button_count" style="margin-left: -10px;">
+                            <div class="answer-like label label-default">
+                              <a class="anslikebutton" value="-1" aid="{{ answer.id }}" id="ansbtndislike{{ answer.id }}" style="margin: 4px -4px;"><span class="page-like-img {% if answer.id in dislikes %}is{% endif %}dislikebtn"/></a>
+                              <span id="aRating{{ answer.id }}" class="label label-default">{{ answer.likes }}</span>
+                              <a class="anslikebutton" value="1" aid="{{ answer.id }}" id="ansbtnlike{{ answer.id }}" style="margin: 4px -4px;"><span class="page-like-img {% if answer.id in likes %}is{% endif %}likebtn"></a>
+                           </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-xs-10 col-sm-10">
+                    <div class="row">
+                        <a href="#"><h3
+                                style="size: 22px; margin-top: 0px; margin-bottom: 5px"> {{ answer.title }} </h3>
+                        </a>
+                        <p style=" font-size:16px; margin-bottom: 15px">
+                            {{ answer.text }}
+                        </p>
+                        <div>
+                            {% if question.author == request.user %}
+                                {% if answer.correct %}
+                                    <div class="label label-default" style="width:120px; height: 20px; margin: 4px 4px;text-align: center;background-color: #5cb85c;"> correct answer!</div>
+                                {% else %}
+                                    <div id="ansid{{ answer.id }}">
+                                    <button type="button" aid="{{ answer.id }}" class="btn btn-outline-success answer-vote" >✓ Correct
+                                    </button>
+                                </div>
+                                {% endif %}
+                            {% else %}
+                                {% if answer.correct %}
+                                    <div class="label label-default" style="width:120px; height: 20px; margin: 4px 4px;text-align: center; background-color: #5cb85c;"> It`s correct answer</div>
+                                {% endif %}
+                            {% endif %}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    {% endfor %}
+    {% include 'paginator.html' with paginated=answers %}
+    {% if request.user.is_authenticated %}
+
+        <hr/>
+        <div class="ask-answer-form">
+            <form class="form-horizontal" method="post" action="">
+                {% csrf_token %}
+                <div class="form-group">
+                    <div class="col-sm-12">
+                        {{ form.text }}
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="col-sm-4">
+                        <button type="submit" class="btn btn-primary">Answer</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    {% else %}
+        <p>You can not add the answers</p>
+    {% endif %}
+{% endblock %}

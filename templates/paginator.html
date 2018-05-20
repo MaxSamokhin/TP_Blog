@@ -1,0 +1,11 @@
+<div class="pagination">
+    <li>{% if paginated.has_previous %}
+        <a href="?page={{ paginated.previous_page_number }}">&laquo;</a>
+        {% endif %}
+    </li>
+    <li><span class="current"> {{ paginated.number }}  </span></li>
+    <li>{% if paginated.has_next %}
+        <a href="?page={{ paginated.next_page_number }}">&raquo;</a>
+        {% endif %}
+    </li>
+</div>

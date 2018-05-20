@@ -30,3 +30,39 @@
  #set_log a:hover {
     text-decoration: none;
 }
+
+ /*Кнопки лайков */
+.likebutton{
+	cursor: pointer;
+}
+.anslikebutton{
+	cursor: pointer;
+}
+.likebtn{
+	vertical-align: bottom;
+	content: url("img/like.png");
+}
+.islikebtn{
+	vertical-align: bottom;
+	content: url("img/is_liked.png")
+}
+.dislikebtn{
+	vertical-align: bottom;
+	content: url("img/dislike.png")
+}
+.isdislikebtn{
+	vertical-align: bottom;
+	content: url("img/is_disliked.png")
+}
+.page-question-like{
+	width: 120px;
+	margin-top: 110px;
+	margin-left: -110px;
+	float: left;
+	text-align: center;
+}
+
+.page-like-img{
+	width: 20px;
+	height: 20px;
+}

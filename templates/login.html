@@ -1,0 +1,41 @@
+{%extends 'base.html'%}
+{% load staticfiles %}
+
+{% block title %}<title>AskMax_ask_input</title>{% endblock %}
+
+{%block content%}
+    <h2 style="margin:0 0 15px 15px;">Log In</h2>
+{#    <p  style="margin-left: 15px;">Sorry, wrong password</p>#}
+    <p class="text-danger" style="margin-left: 15px;">
+        {{ form.non_field_errors.as_text }}
+    </p>
+<form class="form-horizontal" method="post">
+    {% csrf_token %}
+    <div class="col-sm-12">
+        <div class="col-sm-2">
+            <label class="control-label" for="formGroupInputSmall">{{ form.login.label }}</label>
+            <br>
+        </div>
+        <div class="col-sm-6">
+             {{ form.login }}
+             <br>
+        </div>
+        <div class="col-sm-4"></div>
+    </div>
+    <div class="col-sm-12">
+        <div class="col-sm-2">
+            <label class="control-label" for="formGroupInputSmall"
+                   id="formGroupInputSmall">{{ form.password.label }}</label>
+        </div>
+        <div class="col-sm-6">
+            {{ form.password }}
+            <br>
+            <button type="submit" class="btn btn-success">Log in</button>
+            <br>
+            <br>
+            <a href="{% url 'signup' %}" style="display: block;">Create new account</a>
+        </div>
+        <div class="col-sm-4"></div>
+    </div>
+</form>
+{%endblock%}

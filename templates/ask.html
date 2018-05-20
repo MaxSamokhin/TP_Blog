@@ -1,0 +1,70 @@
+{% extends "base.html" %}
+{% load staticfiles %}
+{% block title %}<title>AskMax_ask</title>{% endblock %}
+{##}
+{#{%block content%}#}
+{#    <br>#}
+{#    <div class="row">#}
+{#        <div class="form-group form-group-sm">#}
+{#            <label class="col-sm-1 control-label" for="formGroupInputSmall">Title</label>#}
+{#            <div class="col-sm-11">#}
+{#                <input class="form-control" type="text" id="formGroupInputSmall" placeholder="input title">#}
+{#                <br>#}
+{#            </div>#}
+{#        </div>#}
+{#        <div class="form-group form-group-sm">#}
+{#            <label class="col-sm-1 control-label" for="formGroupInputSmall">Text</label>#}
+{#            <div class="col-sm-11">#}
+{#                <textarea class="form-control" rows="8" cols="20" placeholder="input text"></textarea>#}
+{#                <br>#}
+{#            </div>#}
+{#        </div>#}
+{#        <div class="form-group form-group-sm">#}
+{#            <label class="col-sm-1 control-label" for="formGroupInputSmall">Tags</label>#}
+{#            <div class="col-sm-11">#}
+{#                <input class="form-control" type="text" placeholder="input tags">#}
+{#                <br>#}
+{#            </div>#}
+{#        </div>#}
+{#        <div class="form-group form-group-sm">#}
+{#            <div class="col-sm-1"></div>#}
+{#            <div class="col-sm-11">#}
+{#                <button class="btn btn-success" type="submit">Submit</button>#}
+{#            </div>#}
+{#        </div>#}
+{#    </div>#}
+{#{% endblock%}#}
+
+{% block content %}
+    {% for e in form.non_field_errors %}
+        <div class="alert alert-danger" role="alert">
+            <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
+            {{ e }}
+        </div>
+    {% endfor %}
+
+    <div class="col-sm-12">
+    <h2 style="margin: 0px">New question</h2>
+        <form class="form-horizontal" method="post" action="" style="margin-left: -80px" >
+            {% csrf_token %}
+            <br>
+            <div class="col-sm-18" style="">
+            {% for field in form %}
+                <div class="form-group{% if field.errors %} has-error{% endif %}">
+                    <label for="login" class="col-sm-2 control-label">{{ field.label }}</label>
+                    <div class="col-sm-7">
+                        {{ field }}
+                        {% if field.errors %} {% for e in field.errors %}{{ e }}{% endfor %}
+                        {% endif %}
+                    </div>
+                </div>
+            {% endfor %}
+            <div class="form-group" style="margin-left: -120px">
+                <div class="col-sm-offset-3 col-sm-6">
+                    <button type="submit" class="btn btn-success">Ask</button>
+                </div>
+            </div>
+            </div>
+        </form>
+    </div>
+{% endblock %}

@@ -1,0 +1,12 @@
+{%extends 'index.html'%}
+{% load staticfiles %}
+
+{% block title %}<title>AskMax - Hot!</title>{% endblock %}
+
+{%block tabs%}
+    <div class="col-xs-11 col-sm-11">
+        <h2 style="margin: 0px">Tag: #{{context.tag}}</h2>
+    </div>
+    <br>
+{%endblock%}
+

@@ -1,0 +1,46 @@
+{%extends 'base.html'%}
+{% load staticfiles %}
+
+{% block title %}<title>AskMax_question</title>{% endblock %}
+
+{%block content%}
+<div class="col-sm-10">
+<div class="row">
+    {% for e in form.non_field_errors %}
+        <div class="ask-signup-form-error">
+            <div class="alert alert-danger" role="alert">
+                <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
+                {{ e }}
+            </div>
+        </div>
+    {% endfor %}
+    <br>
+
+    <form class="form-horizontal" method="post" action="" enctype="multipart/form-data">
+        {% csrf_token %}
+         <h2 style="margin-top: -5px;">Settings (your login): {{ u.username }}</h2>
+        {% for field in form %}
+            <div class="form-group{% if field.errors %} has-error{% endif %}">
+                <label for="{{ field.name }}" class="col-sm-2 control-label">{{ field.label }}</label>
+                <div class="col-sm-7">
+                    {% if field.name == 'avatar' %}
+{#                            <img src="{{ u.profile.avatar.url }}" class="" style="max-width: 100%"/>#}
+                        <img src="{{ request.user.profile.avatar.url }}" width="170px" style="height: auto;" alt="ava"/>
+                         <br><br>
+                    {% endif %}
+                    {{ field }}
+                    {% if field.errors %} {% for e in field.errors %}{{ e }}{% endfor %}
+                    {% endif %}
+                </div>
+            </div>
+        {% endfor %}
+        <div class="form-group">
+            <div class="col-sm-offset-2 col-sm-6">
+                <button type="submit" class="btn btn-success">Save</button>
+            </div>
+        </div>
+    </form>
+</div>
+</div>
+    <div class="col-sm-2"></div>
+{% endblock %}
